@@ -1,5 +1,8 @@
 <?php
-// employer.php - simple employer submission form
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/csrf.php';
+require_login();
+$user = current_user();
 ?>
 <!doctype html>
 <html lang="en">
@@ -12,7 +15,9 @@
 <body>
   <main class="container">
     <h1>Post a Job</h1>
+    <p>Logged in as <?php echo htmlspecialchars($user['username']); ?> — <a href="logout.php">Logout</a></p>
     <form action="submit.php" method="post">
+      <?php echo csrf_field(); ?>
       <label>Job Title<br><input name="title" required></label>
       <label>Company<br><input name="company" required></label>
       <label>Location<br><input name="location"></label>

@@ -1,9 +1,18 @@
 <?php
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/csrf.php';
 require_once __DIR__ . '/db/db.php';
+
+require_login();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo 'Method Not Allowed';
+    exit;
+}
+
+if (!csrf_verify($_POST['csrf_token'] ?? '')){
+    header('Location: employer.php?error=csrf');
     exit;
 }
 
