@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/lib/auth.php';
-require_once __DIR__ . '/lib/csrf.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_once __DIR__ . '/../lib/csrf.php';
 require_login();
 $user = current_user();
 ?>
@@ -15,8 +15,8 @@ $user = current_user();
 <body>
   <main class="container">
     <h1>Post a Job</h1>
-    <p>Logged in as <?php echo htmlspecialchars($user['username']); ?> — <a href="logout.php">Logout</a></p>
-    <form action="submit.php" method="post">
+    <p>Logged in as <?php echo htmlspecialchars($user['username']); ?> — <a href="/logout.php">Logout</a></p>
+    <form action="/submit.php" method="post">
       <?php echo csrf_field(); ?>
       <label>Job Title<br><input name="title" required></label>
       <label>Company<br><input name="company" required></label>
@@ -33,7 +33,7 @@ $user = current_user();
       <button type="submit">Submit Job</button>
     </form>
 
-    <p><a href="index.html">Go to student search UI</a></p>
+    <p><a href="/index.html">Go to student search UI</a></p>
   </main>
 </body>
 </html>

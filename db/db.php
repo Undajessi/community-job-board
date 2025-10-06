@@ -3,11 +3,13 @@
 
 function get_db_path(): string
 {
-    $dir = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'data';
+    $cfg = require __DIR__ . '/../config.php';
+    $path = $cfg['db_path'];
+    $dir = dirname($path);
     if (!is_dir($dir)) {
         mkdir($dir, 0755, true);
     }
-    return $dir . DIRECTORY_SEPARATOR . 'jobs.sqlite';
+    return $path;
 }
 
 function get_db(): PDO

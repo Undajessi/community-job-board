@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/lib/auth.php';
-require_once __DIR__ . '/lib/csrf.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_once __DIR__ . '/../lib/csrf.php';
 start_session_once();
 $error='';
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     } else {
         $ok = register_user($username, $password);
         if ($ok){
-            header('Location: login.php');
+            header('Location: /login.php');
             exit;
         } else {
             $error = 'Could not register (username may be taken)';
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 }
 ?>
 <!doctype html>
-<html><head><meta charset="utf-8"><title>Register</title><link rel="stylesheet" href="assets/css/styles.css"></head>
+<html><head><meta charset="utf-8"><title>Register</title><link rel="stylesheet" href="/assets/css/styles.css"></head>
 <body><main class="container"><h1>Register</h1>
 <?php if($error): ?><p style="color:red"><?php echo htmlspecialchars($error) ?></p><?php endif; ?>
 <form method="post">
@@ -33,5 +33,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
   <?php echo csrf_field(); ?>
   <button type="submit">Register</button>
 </form>
-<p>Have an account? <a href="login.php">Login</a></p>
+<p>Have an account? <a href="/login.php">Login</a></p>
 </main></body></html>

@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/lib/auth.php';
-require_once __DIR__ . '/lib/csrf.php';
-require_once __DIR__ . '/db/db.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_once __DIR__ . '/../lib/csrf.php';
+require_once __DIR__ . '/../db/db.php';
 
 require_login();
 
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 if (!csrf_verify($_POST['csrf_token'] ?? '')){
-    header('Location: employer.php?error=csrf');
+    header('Location: /employer.php?error=csrf');
     exit;
 }
 
@@ -23,7 +23,7 @@ $type = trim($_POST['type'] ?? '');
 $description = trim($_POST['description'] ?? '');
 
 if ($title === '' || $company === '') {
-    header('Location: employer.php?error=missing');
+    header('Location: /employer.php?error=missing');
     exit;
 }
 
@@ -38,10 +38,10 @@ try {
         ':description' => $description,
     ]);
 
-    header('Location: employer.php?success=1');
+    header('Location: /employer.php?success=1');
     exit;
 } catch (Exception $e) {
     error_log($e->getMessage());
-    header('Location: employer.php?error=server');
+    header('Location: /employer.php?error=server');
     exit;
 }

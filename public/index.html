@@ -23,13 +23,24 @@
         <option>Contract</option>
         <option>Internship</option>
       </select>
+      <select id="per_page">
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+      </select>
       <button id="searchBtn">Search</button>
-      <a class="small" href="employer.php">Employers: post a job</a>
+      <a class="small" href="/employer.php">Employers: post a job</a>
     </section>
 
     <section id="results" class="results">
       <!-- job cards will be injected here -->
     </section>
+
+    <nav class="pagination" id="pagination">
+      <button id="prevPage" disabled>Prev</button>
+      <span id="pageInfo">Page 1</span>
+      <button id="nextPage" disabled>Next</button>
+    </nav>
   </main>
 
   <script src="assets/js/main.js"></script>

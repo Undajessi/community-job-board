@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/lib/auth.php';
-require_once __DIR__ . '/lib/csrf.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_once __DIR__ . '/../lib/csrf.php';
 start_session_once();
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 }
 ?>
 <!doctype html>
-<html><head><meta charset="utf-8"><title>Login</title><link rel="stylesheet" href="assets/css/styles.css"></head>
+<html><head><meta charset="utf-8"><title>Login</title><link rel="stylesheet" href="/assets/css/styles.css"></head>
 <body><main class="container"><h1>Login</h1>
 <?php if($error): ?><p style="color:red"><?php echo htmlspecialchars($error) ?></p><?php endif; ?>
 <form method="post">
@@ -31,5 +31,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
   <?php echo csrf_field(); ?>
   <button type="submit">Login</button>
 </form>
-<p>New? <a href="register.php">Register</a></p>
+<p>New? <a href="/register.php">Register</a></p>
 </main></body></html>
