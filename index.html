@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Community Job Board</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Community Job Board</h1>
+      <p>Search and filter jobs posted by local employers.</p>
+    </header>
+
+    <section class="search">
+      <input id="q" placeholder="Search title, company, description..." />
+      <input id="location" placeholder="Location (city, remote...)" />
+      <select id="type">
+        <option value="">Any type</option>
+        <option>Full-time</option>
+        <option>Part-time</option>
+        <option>Contract</option>
+        <option>Internship</option>
+      </select>
+      <button id="searchBtn">Search</button>
+      <a class="small" href="employer.php">Employers: post a job</a>
+    </section>
+
+    <section id="results" class="results">
+      <!-- job cards will be injected here -->
+    </section>
+  </main>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
