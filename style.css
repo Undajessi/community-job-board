@@ -1,0 +1,98 @@
+/* Base styles */  
+* {  
+    margin: 0;  
+    padding: 0;  
+    box-sizing: border-box;  
+}  
+
+body {  
+    font-family: 'Arial', sans-serif;  
+    line-height: 1.6;  
+    color: #333;  
+    background-color: #f9f9f9;  
+}  
+
+.container {  
+    width: 90%;  
+    max-width: 1200px;  
+    margin: 0 auto;  
+    padding: 0 15px;  
+}  
+
+a {  
+    text-decoration: none;  
+    color: #007bff;  
+}  
+
+a:hover {  
+    text-decoration: underline;  
+}  
+
+ul {  
+    list-style: none;  
+}  
+
+.btn {  
+    display: inline-block;  
+    background: #007bff;  
+    color: #fff;  
+    padding: 10px 20px;  
+    border: none;  
+    border-radius: 5px;  
+    cursor: pointer;  
+    text-decoration: none;  
+    font-size: 16px;  
+    transition: background 0.3s ease;  
+}  
+
+.btn:hover {  
+    background: #0069d9;  
+    text-decoration: none;  
+}  
+
+.btn-link {  
+    background: none;  
+    border: none;  
+    color: #007bff;  
+    cursor: pointer;  
+    text-decoration: none;  
+    font-size: 16px;  
+}  
+
+.btn-link:hover {  
+    text-decoration: underline;  
+}  
+
+/* Header */  
+header {  
+    background-color: #fff;  
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  
+    padding: 1.5rem 0;  
+}  
+
+header .container {  
+    display: flex;  
+    justify-content: space-between;  
+    align-items: center;  
+}  
+
+.logo h1 {  
+    font-size: 1.8rem;  
+    color: #007bff;  
+}  
+
+nav ul {  
+    display: flex;  
+}  
+
+nav ul li {  
+    margin-left: 1.5rem;  
+}  
+
+/* Hero Section */  
+.hero {  
+    background: linear-gradient(to right, #007bff, #00c6ff);  
+    color: #fff;  
+    padding: 5rem 0;  
+    text-align: center; 
+}

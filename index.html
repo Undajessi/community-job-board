@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Job Board</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Community Job Board</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a th:href="@{/}">Home</a></li>
+                    <li><a th:href="@{/jobs}">Jobs</a></li>
+                    <li sec:authorize="hasRole('EMPLOYER')"><a th:href="@{/jobs/my-jobs}">My Jobs</a></li>
+                    <li sec:authorize="hasRole('JOBSEEKER')"><a th:href="@{/applications/my-applications}">My Applications</a></li>
+                    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin}">Admin</a></li>
+                    <li sec:authorize="isAuthenticated()"><a th:href="@{/profile}">Profile</a></li>
+                    <li sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="btn-link">Logout</button>
+                        </form>
+                    </li>
+                    <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
+                    <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}" class="btn">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Find Your Next Opportunity</h1>
+                <p>Connect with local employers and discover jobs in your community</p>
+                <div class="search-box">
+                    <form th:action="@{/jobs}" method="get">
+                        <input type="text" name="keyword" placeholder="Search jobs...">
+                        <button type="submit" class="btn">Search</button>
+                    </form>
+                </div>
+                <div class="categories">
+                    <h3>Browse by Category:</h3>
+                    <div class="category-list">
+                        <a th:each="category : ${categories}" th:href="@{/jobs(category=${category})}" th:text="${category}"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="recent-jobs">
+        <div class="container">
+            <h2>Recent Job Postings</h2>
+            <div class="job-list">
+                <div class="job-card" th:each="job : ${recentJobs}">
+                    <h3 th:text="${job.title}"></h3>
+                    <div class="job-meta">
+                        <span class="location" th:text="${job.location}"></span>
+                        <span class="category" th:text="${job.category}"></span>
+                    </div>
+                    <p th:text="${#strings.abbreviate(job.description, 150)}"></p>
+                    <div class="job-footer">
+                        <span class="date" th:text="${#temporals.format(job.postDate, 'dd MMM yyyy')}"></span>
+                        <a th:href="@{/jobs/view/{id}(id=${job.id})}" class="btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all">
+                <a th:href="@{/jobs}" class="btn">View All Jobs</a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <h2>Why Use Our Job Board?</h2>
+            <div class="feature-grid">
+                <div class="feature">
+                    <h3>Local Focus</h3>
+                    <p>Connect with opportunities in your community</p>
+                </div>
+                <div class="feature">
+                    <h3>Simple to Use</h3>
+                    <p>Easy job posting and application process</p>
+                </div>
+                <div class="feature">
+                    <h3>Direct Contact</h3>
+                    <p>Connect directly with employers or candidates</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Community Job Board</h3>
+                    <p>Connecting talent with opportunity</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a th:href="@{/}">Home</a></li>
+                        <li><a th:href="@{/jobs}">Browse Jobs</a></li>
+                        <li><a th:href="@{/register}">Register</a></li>
+                        <li><a th:href="@{/login}">Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Email: contact@communityjobs.com</p>
+                    <p>Phone: (123) 456-7890</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Community Job Board. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
