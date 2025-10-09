@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post a Job</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1>Post a Job</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="form-section">
+    <form id="postJobForm">
+      <input type="text" id="title" placeholder="Job Title" required>
+      <input type="text" id="location" placeholder="Location" required>
+      <select id="category" required>
+        <option value="">Select Category</option>
+        <option>IT</option>
+        <option>Education</option>
+        <option>Retail</option>
+      </select>
+      <textarea id="description" placeholder="Job Description" required></textarea>
+      <button type="submit">Post Job</button>
+    </form>
+  </section>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

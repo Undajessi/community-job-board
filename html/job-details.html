@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Details</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1>Community Job Board</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jobs.html">Browse Jobs</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="job-details">
+      <!-- Job details loaded here -->
+    </section>
+
+    <section id="application-section" class="apply-section">
+      <h2>Apply for this Job</h2>
+      <form id="application-form">
+        <label>Full Name</label>
+        <input type="text" id="applicant-name" required />
+
+        <label>Email</label>
+        <input type="email" id="applicant-email" required />
+
+        <label>Cover Letter</label>
+        <textarea id="applicant-message" rows="4" required></textarea>
+
+        <button type="submit">Submit Application</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="js/job-details.js"></script>
+</body>
+</html>

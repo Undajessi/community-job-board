@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1>Dashboard</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="post-job.html">Post Job</a></li>
+        <li><a href="login.html" id="logout">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="form-section">
+    <h2>Post a New Job</h2>
+    <form id="postJobForm">
+      <input type="text" id="title" placeholder="Job Title" required>
+      <input type="text" id="location" placeholder="Location" required>
+      <select id="category" required>
+        <option value="">Select Category</option>
+        <option>IT</option>
+        <option>Education</option>
+        <option>Retail</option>
+      </select>
+      <textarea id="description" placeholder="Job Description" required></textarea>
+      <button type="submit">Post Job</button>
+    </form>
+  </section>
+
+  <section class="job-list">
+    <h2>Your Posted Jobs</h2>
+    <div id="job-container"></div>
+  </section>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

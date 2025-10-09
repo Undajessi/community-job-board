@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Applications</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1>Employer Dashboard</h1>
+      <ul>
+        <li><a href="dashboard.html">My Jobs</a></li>
+        <li><a href="post-job.html">Post Job</a></li>
+        <li><a href="applications.html" class="active">Applications</a></li>
+        <li><a href="index.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="applications-section">
+      <h2>Job Applications</h2>
+
+      <!-- Filter Controls -->
+      <div class="filter-bar">
+        <input type="text" id="searchInput" placeholder="Search by applicant name or email..." />
+        <select id="jobFilter">
+          <option value="">All Job Titles</option>
+        </select>
+      </div>
+
+      <!-- Applications List -->
+      <div id="applications-list">
+        <!-- Applications loaded dynamically -->
+      </div>
+    </section>
+  </main>
+
+  <script src="js/applications.js"></script>
+</body>
+</html>

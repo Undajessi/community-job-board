@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Community Job Board</title>
+  <title>Job Listings</title>
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
@@ -19,14 +19,19 @@
     </nav>
   </header>
 
-  <section class="hero">
-    <h2>Connecting Local Talent with Local Opportunity</h2>
-    <p>Find jobs near you or post openings for your community.</p>
-    <a href="jobs.html" class="btn">Browse Jobs</a>
+  <section class="filter-bar">
+    <input type="text" id="keyword" placeholder="Search by keyword">
+    <select id="category">
+      <option value="">All Categories</option>
+      <option>IT</option>
+      <option>Education</option>
+      <option>Retail</option>
+    </select>
+    <button id="search-btn">Search</button>
   </section>
 
-  <footer>
-    <p>&copy; 2025 Community Job Board</p>
-  </footer>
+  <section id="job-list" class="job-list"></section>
+
+  <script src="js/jobs.js"></script>
 </body>
 </html>
