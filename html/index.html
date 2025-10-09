@@ -6,23 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Job Board</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
-    <!-- Local preview fallback (relative to this html/ folder) -->
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/main.css"> <!-- Fallback for local preview -->
 </head>
+
 <body>
-    <header>
-        <div class="container">
-            <div class="brand-group">
-                <div class="logo">
-                    <h1>Community Job Board</h1>
-                </div>
-                <ul class="top-links">
-                    <a th:href="@{/}">Home</a>
-                    <a th:href="@{/jobs}">Browse Jobs</a>
-                    <a th:href="@{/register}" class="btn small">Register</a>
-                    <a th:href="@{/login}">Login</a>
-                </ul>
-            </div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+    <div class="container header-top">
+        <h1 class="site-title">Community Job Board</h1>
+    </div>
+
+    <div class="container header-bottom">
+        <nav role="navigation" aria-label="Primary navigation">
+            <ul id="primary-nav" aria-hidden="true" class="main-links">
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/jobs}">Browse Jobs</a></li>
+                <li><a th:href="@{/about}">About</a></li>
+                <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
+                <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}" class="btn small">Register</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/profile}">Profile</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn-link">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
             <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation">
                 <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <rect class="bar bar1" x="3" y="6" width="18" height="2" rx="1"></rect>
@@ -31,24 +43,15 @@
                 </svg>
                 <span class="sr-only">Toggle navigation</span>
             </button>
-            <nav>
-                <ul id="primary-nav">
-                    <li sec:authorize="hasRole('EMPLOYER')"><a th:href="@{/jobs/my-jobs}">My Jobs</a></li>
-                    <li sec:authorize="hasRole('JOBSEEKER')"><a th:href="@{/applications/my-applications}">My Applications</a></li>
-                    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin}">Admin</a></li>
-                    <li sec:authorize="isAuthenticated()"><a th:href="@{/profile}">Profile</a></li>
-                    <li sec:authorize="isAuthenticated()">
-                        <form th:action="@{/logout}" method="post">
-                            <button type="submit" class="btn-link">Logout</button>
-                        </form>
-                    </li>
-                </ul>
-            </nav>
-            
+
+            <!-- Single button that opens a panel with all textual options -->
+            <button id="all-menu-btn" class="all-menu-btn" aria-expanded="false" aria-controls="all-menu-panel" aria-label="Open menu">Menu ▾</button>
+            <div id="all-menu-panel" class="menu-panel" aria-hidden="true"></div>
         </div>
-    </header>
-    
-    <main id="main">
+    </div>
+</header>
+
+<main id="main">
     <section class="hero">
         <div class="container">
             <div class="hero-content">
@@ -60,16 +63,18 @@
                         <button type="submit" class="btn">Search</button>
                     </form>
                 </div>
+
                 <div class="categories">
                     <h3>Browse by Category:</h3>
                     <div class="category-list">
-                        <a th:each="category : ${categories}" th:href="@{/jobs(category=${category})}" th:text="${category}"></a>
+                        <a th:each="category : ${categories}" th:href="@{/jobs(category=${category})}"
+                           th:text="${category}"></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <section class="recent-jobs">
         <div class="container">
             <h2>Recent Job Postings</h2>
@@ -87,12 +92,13 @@
                     </div>
                 </div>
             </div>
+
             <div class="view-all">
                 <a th:href="@{/jobs}" class="btn">View All Jobs</a>
             </div>
         </div>
     </section>
-    
+
     <section class="features">
         <div class="container">
             <h2>Why Use Our Job Board?</h2>
@@ -102,48 +108,38 @@
                     <p>Connect with opportunities in your community</p>
                 </div>
                 <div class="feature">
-                    <h3>Simple to Use</h3>
-                    <p>Easy job posting and application process</p>
+                    <h3>Easy Applications</h3>
+                    <p>Apply directly from the site with one click</p>
                 </div>
                 <div class="feature">
-                    <h3>Direct Contact</h3>
-                    <p>Connect directly with employers or candidates</p>
+                    <h3>Trusted Employers</h3>
+                    <p>Companies who hire locally and fairly</p>
                 </div>
             </div>
         </div>
     </section>
-    </main>
-    
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>Community Job Board</h3>
-                    <p>Connecting talent with opportunity</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a th:href="@{/}">Home</a></li>
-                        <li><a th:href="@{/jobs}">Browse Jobs</a></li>
-                        <li><a th:href="@{/register}">Register</a></li>
-                        <li><a th:href="@{/login}">Login</a></li>
-                    </ul>
-                </div>
-                <div class="footer-contact">
-                    <h4>Contact Us</h4>
-                    <p>Email: contact@communityjobs.com</p>
-                    <p>Phone: (123) 456-7890</p>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2023 Community Job Board. All rights reserved.</p>
-            </div>
+</main>
+
+<footer>
+    <div class="container footer-content">
+        <div class="footer-logo"><h3>Community Job Board</h3></div>
+        <div class="footer-links">
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/jobs}">Browse Jobs</a></li>
+                <li><a th:href="@{/about}">About</a></li>
+            </ul>
         </div>
-    </footer>
-    
-    <script src="../js/main.js"></script>
-    <!-- Thymeleaf script reference kept for server rendering -->
-    <script th:src="@{/js/main.js}"></script>
+        <div class="footer-contact">
+            <p>Contact: <a href="mailto:info@example.org">info@example.org</a></p>
+        </div>
+    </div>
+    <div class="container">
+        <p class="copyright">&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> Community Job Board</p>
+    </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>
