@@ -10,13 +10,22 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <header>
         <div class="container">
             <div class="logo">
                 <h1>Community Job Board</h1>
             </div>
+            <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation">
+                <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <rect class="bar bar1" x="3" y="6" width="18" height="2" rx="1"></rect>
+                    <rect class="bar bar2" x="3" y="11" width="18" height="2" rx="1"></rect>
+                    <rect class="bar bar3" x="3" y="16" width="18" height="2" rx="1"></rect>
+                </svg>
+                <span class="sr-only">Toggle navigation</span>
+            </button>
             <nav>
-                <ul>
+                <ul id="primary-nav">
                     <li><a th:href="@{/}">Home</a></li>
                     <li><a th:href="@{/jobs}">Jobs</a></li>
                     <li sec:authorize="hasRole('EMPLOYER')"><a th:href="@{/jobs/my-jobs}">My Jobs</a></li>
@@ -35,6 +44,7 @@
         </div>
     </header>
     
+    <main id="main">
     <section class="hero">
         <div class="container">
             <div class="hero-content">
@@ -98,6 +108,7 @@
             </div>
         </div>
     </section>
+    </main>
     
     <footer>
         <div class="container">

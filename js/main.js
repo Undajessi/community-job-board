@@ -3,10 +3,93 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('nav ul');
     
+    function setMenu(open) {
+        if (!menuToggle || !navMenu) return;
+        navMenu.classList.toggle('show', open);
+        menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) {
+            trapFocus(navMenu, menuToggle);
+        } else {
+            releaseFocus();
+            menuToggle.focus();
+        }
+    }
+
     if (menuToggle) {
         menuToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('show');
+            const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+            setMenu(!isOpen);
+            // animate icon
+            menuToggle.classList.toggle('open', !isOpen);
         });
+
+        // close on Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') setMenu(false);
+        });
+
+        // close when clicking outside nav
+        document.addEventListener('click', function(e) {
+            if (!navMenu || !menuToggle) return;
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                setMenu(false);
+                menuToggle.classList.remove('open');
+            }
+        });
+
+        // close menu on nav link click (mobile)
+        navMenu.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                setMenu(false);
+                menuToggle.classList.remove('open');
+            });
+        });
+    }
+
+    // Focus trap helpers
+    var lastFocusedBeforeTrap = null;
+    var focusableSelectors = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+    var currentTrap = null;
+
+    function trapFocus(container, returnFocusEl) {
+        lastFocusedBeforeTrap = document.activeElement;
+        currentTrap = container;
+        var focusable = Array.from(container.querySelectorAll(focusableSelectors)).filter(function(el){ return el.offsetParent !== null; });
+        if (focusable.length) focusable[0].focus();
+
+        function handleKey(e) {
+            if (!currentTrap) return;
+            if (e.key === 'Tab') {
+                var focusable = Array.from(currentTrap.querySelectorAll(focusableSelectors)).filter(function(el){ return el.offsetParent !== null; });
+                if (!focusable.length) return;
+                var first = focusable[0];
+                var last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        }
+
+        document.addEventListener('keydown', handleKey);
+        // store handler so we can remove it
+        container._trapHandler = handleKey;
+    }
+
+    function releaseFocus() {
+        if (currentTrap) {
+            var handler = currentTrap._trapHandler;
+            if (handler) document.removeEventListener('keydown', handler);
+            currentTrap._trapHandler = null;
+            currentTrap = null;
+        }
+        if (lastFocusedBeforeTrap) {
+            try { lastFocusedBeforeTrap.focus(); } catch (e) {}
+            lastFocusedBeforeTrap = null;
+        }
     }
     
     // Job search form validation
