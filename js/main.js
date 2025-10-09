@@ -1,17 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
+    // Mobile menu toggle — resolve nav by aria-controls so markup changes won't break behaviour
     const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('nav ul');
-    
+    const getNavMenu = () => {
+        if (!menuToggle) return document.querySelector('nav ul');
+        const id = menuToggle.getAttribute('aria-controls');
+        return id ? document.getElementById(id) : document.querySelector('nav ul');
+    };
+    let navMenu = getNavMenu();
+
     function setMenu(open) {
-        if (!menuToggle || !navMenu) return;
+        if (!menuToggle) return;
+        navMenu = getNavMenu();
+        if (!navMenu) return;
         navMenu.classList.toggle('show', open);
         menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         if (open) {
             trapFocus(navMenu, menuToggle);
         } else {
             releaseFocus();
-            menuToggle.focus();
+            try { menuToggle.focus(); } catch (e) {}
         }
     }
 
@@ -23,26 +30,49 @@ document.addEventListener('DOMContentLoaded', function() {
             menuToggle.classList.toggle('open', !isOpen);
         });
 
+        const refreshNavMenu = () => { navMenu = getNavMenu(); };
+
         // close on Escape
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') setMenu(false);
         });
 
-        // close when clicking outside nav
+        // close when clicking outside nav (but allow clicks on header brand/top-links)
         document.addEventListener('click', function(e) {
+            refreshNavMenu();
+            const brand = document.querySelector('.brand-group');
             if (!navMenu || !menuToggle) return;
-            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-                setMenu(false);
-                menuToggle.classList.remove('open');
-            }
+            if (navMenu.contains(e.target) || menuToggle.contains(e.target)) return;
+            if (brand && brand.contains(e.target)) return; // ignore header interactions
+            setMenu(false);
+            menuToggle.classList.remove('open');
         });
 
-        // close menu on nav link click (mobile)
-        navMenu.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', function() {
+        // close menu on nav link click (mobile) — attach and reattach if nav changes
+        function closeOnNavLink() { setMenu(false); menuToggle.classList.remove('open'); }
+        const attachNavLinkHandlers = () => {
+            refreshNavMenu();
+            if (!navMenu) return;
+            navMenu.querySelectorAll('a').forEach(function(link) {
+                link.removeEventListener('click', closeOnNavLink);
+                link.addEventListener('click', closeOnNavLink);
+            });
+        };
+
+        attachNavLinkHandlers();
+
+        // Reset menu on resize (useful when switching device/orientation)
+        let lastIsMobile = window.innerWidth <= 768;
+        window.addEventListener('resize', function() {
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile !== lastIsMobile) {
                 setMenu(false);
                 menuToggle.classList.remove('open');
-            });
+                releaseFocus();
+                refreshNavMenu();
+                attachNavLinkHandlers();
+                lastIsMobile = isMobile;
+            }
         });
     }
 

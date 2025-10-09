@@ -6,15 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Job Board</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
-    <!-- Local preview fallback -->
-    <link rel="stylesheet" href="css/main.css">
+    <!-- Local preview fallback (relative to this html/ folder) -->
+    <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
-    <a class="skip-link" href="#main">Skip to main content</a>
     <header>
         <div class="container">
-            <div class="logo">
-                <h1>Community Job Board</h1>
+            <div class="brand-group">
+                <div class="logo">
+                    <h1>Community Job Board</h1>
+                </div>
+                <ul class="top-links">
+                    <a th:href="@{/}">Home</a>
+                    <a th:href="@{/jobs}">Browse Jobs</a>
+                    <a th:href="@{/register}" class="btn small">Register</a>
+                    <a th:href="@{/login}">Login</a>
+                </ul>
             </div>
             <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation">
                 <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -26,8 +33,6 @@
             </button>
             <nav>
                 <ul id="primary-nav">
-                    <li><a th:href="@{/}">Home</a></li>
-                    <li><a th:href="@{/jobs}">Jobs</a></li>
                     <li sec:authorize="hasRole('EMPLOYER')"><a th:href="@{/jobs/my-jobs}">My Jobs</a></li>
                     <li sec:authorize="hasRole('JOBSEEKER')"><a th:href="@{/applications/my-applications}">My Applications</a></li>
                     <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin}">Admin</a></li>
@@ -37,10 +42,9 @@
                             <button type="submit" class="btn-link">Logout</button>
                         </form>
                     </li>
-                    <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
-                    <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}" class="btn">Register</a></li>
                 </ul>
             </nav>
+            
         </div>
     </header>
     
@@ -138,7 +142,7 @@
         </div>
     </footer>
     
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
     <!-- Thymeleaf script reference kept for server rendering -->
     <script th:src="@{/js/main.js}"></script>
 </body>
