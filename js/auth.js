@@ -1,49 +1,57 @@
 // auth.js
 
-// Handle Login
-const loginForm = document.getElementById("loginForm");
-if (loginForm) {
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    // Retrieve registered users
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const user = users.find(u => u.username === username && u.password === password);
-
-    if (user) {
-      localStorage.setItem("loggedInUser", JSON.stringify(user));
-      alert(`Welcome back, ${user.username}!`);
-      window.location.href = "dashboard.html";
-    } else {
-      alert("Invalid username or password");
-    }
-  });
+// --- Helper Functions ---
+function getUsers() {
+  return JSON.parse(localStorage.getItem("users")) || [];
 }
 
-// Handle Registration
+function saveUsers(users) {
+  localStorage.setItem("users", JSON.stringify(users));
+}
+
+// --- Registration ---
 const registerForm = document.getElementById("registerForm");
 if (registerForm) {
-  registerForm.addEventListener("submit", (e) => {
+  registerForm.addEventListener("submit", function (e) {
     e.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-    const username = document.getElementById("username").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const role = document.getElementById("role").value;
+    const users = getUsers();
+    const userExists = users.find(u => u.email === email);
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    if (users.find(u => u.username === username)) {
-      alert("Username already exists!");
+    if (userExists) {
+      alert("Email already registered!");
       return;
     }
 
-    users.push({ username, email, password, role });
-    localStorage.setItem("users", JSON.stringify(users));
-
+    users.push({ name, email, password });
+    saveUsers(users);
     alert("Registration successful! You can now log in.");
-    window.location.href = "login.html";
+    window.location.href = "login.html"; // Redirect to login
+  });
+}
+
+// --- Login ---
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+  loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const users = getUsers();
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if (!user) {
+      alert("Invalid email or password!");
+      return;
+    }
+
+    // Save current logged-in user
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    alert(`Welcome, ${user.name}!`);
+    window.location.href = "dashboard.html"; // Redirect to dashboard
   });
 }
