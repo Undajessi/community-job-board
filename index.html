@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Job Board</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <!-- Local preview fallback -->
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <header>
@@ -125,6 +127,8 @@
         </div>
     </footer>
     
+    <script src="js/main.js"></script>
+    <!-- Thymeleaf script reference kept for server rendering -->
     <script th:src="@{/js/main.js}"></script>
 </body>
 </html>
