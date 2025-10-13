@@ -79,5 +79,7 @@ function mockEmailAlert(job) {
   `);
 }
 
-// Run on page load
-loadAdminJobs();
+$.get("/api/jobs", function (data) {
+  jobs = data;
+  loadAdminJobs(); // Reuse your existing display logic
+});
