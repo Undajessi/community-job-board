@@ -1,0 +1,7 @@
+SELECT TOP (1000) [ApplicationID]
+      ,[JobID]
+      ,[SeekerID]
+      ,[CoverLetter]
+      ,[AppliedAt]
+      ,[Status]
+  FROM [WADPROJECT].[dbo].[Applications]

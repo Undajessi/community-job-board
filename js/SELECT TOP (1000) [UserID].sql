@@ -1,0 +1,7 @@
+SELECT TOP (1000) [UserID]
+      ,[Name]
+      ,[Email]
+      ,[PasswordHash]
+      ,[Role]
+      ,[CreatedAt]
+  FROM [WADPROJECT].[dbo].[Users]

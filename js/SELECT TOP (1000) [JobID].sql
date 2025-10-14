@@ -1,0 +1,8 @@
+SELECT TOP (1000) [JobID]
+      ,[EmployerID]
+      ,[Title]
+      ,[Description]
+      ,[Category]
+      ,[Location]
+      ,[PostedAt]
+  FROM [WADPROJECT].[dbo].[Jobs]
